@@ -1,0 +1,24 @@
+---
+# tasks file for ansible-role-pbfcomics
+
+- name: Add ansible-role-pbfcomics:{{ pbfcomics_src }} to crontab
+  cron:
+    name: "Add {{ pbfcomics_src }} to crontab"
+    minute: "{{ minute }}"
+    hour: "{{ hour }}"
+    day: "{{ day }}"
+    month: "{{ month }}"
+    weekday: "{{ weekday }}"
+    job: "bash {{ dest_path }}/{{ pbfcomics_src }}.sh > /dev/null"
+  tags: [pbfcomics] 
+
+- name: Copy {{ pbfcomics_src }}.j2 to {{ dest_path }}/{{ pbfcomics_src }}.sh
+  template:
+    src: "{{ pbfcomics_src }}.j2"
+    dest: "{{ dest_path }}/{{ pbfcomics_src }}.sh"
+    owner: root
+    group: root
+    mode: 0644
+    force: yes
+  tags: [pbfcomics]
+

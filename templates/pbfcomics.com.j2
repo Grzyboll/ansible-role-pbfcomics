@@ -1,0 +1,19 @@
+#!/bin/bash
+
+packtpub_link=$(wget -qO- http://pbfcomics.com/random)
+
+IMAGE=$(echo "$packtpub_link" | grep -o -P '(?<=<div id="comic"><img src=).*(?=width)' |  cut -c 2- | rev | cut -c 3- | rev)
+TITLE=$(echo "$packtpub_link" | grep -o -P '(?<=<div id="comic">).*(?=</div>)' | grep -o -P '(?<=title=).*(?= />)' | cut -c 2- | rev | cut -c 2- | rev)
+
+curl -H "Content-Type: application/json" -X POST -d \
+'{"channel": "{{ channel }}",
+  "username": "{{ username }}",
+  "attachments": [
+  {
+    "fallback": "Required plain-text summary of the attachment.",
+    "pretext": "{{ pretext }}",
+    "author_name": "{{ author_name }}",
+    "title": "'"$TITLE"'","title_link":"'"{{ pbfcomics_link }}"'",
+    "image_url":"'"$IMAGE"'"
+   }]
+ }' {{ hooks }}

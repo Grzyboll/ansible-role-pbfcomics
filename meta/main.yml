@@ -1,0 +1,20 @@
+galaxy_info:
+  author: Grzyboll
+  description: This Role checks every day new random comic from http://pbfcomics.com/ and sends it to slack channel.
+
+  license: MIT
+
+  min_ansible_version: 1.9
+
+  platforms:
+  - name: EL
+    versions:
+    - all
+  galaxy_tags:
+    - comic
+    - ansible
+    - bash
+    - pbfcomics
+    - humor
+
+dependencies: []
